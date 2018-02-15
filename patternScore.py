@@ -29,8 +29,10 @@ class Score_Legend(set):
             super(Score_Legend, self).add(Scored_Pattern)
 
 class document():
-    def __init__(self, text, legend):
+    def __init__(self, legend, text, author=None, title=None):
         self.text = text
+        self.author = author
+        self.title = title
         self.legend = legend
         self.score_total = 0
 
