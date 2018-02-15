@@ -28,18 +28,21 @@ class Score_Legend(set):
         if not self.pattern_exists(Scored_Pattern.pattern):
             super(Score_Legend, self).add(Scored_Pattern)
 
-class document():
+class Document():
     def __init__(self, legend, text, author=None, title=None):
         self.text = text
         self.author = author
         self.title = title
         self.legend = legend
-        self.score_total = 0
+        self.score_total = self.score()
 
     def score(self):
         total = 0
+        match_total = 0
         for scored_pattern in self.legend:
             matches = re.findall(scored_pattern.re_obj, self.text)
             for match in matches:
                 total = total + scored_pattern.score
-        return total
+                match_total = match_total + 1
+        self.score_total = total /match_total
+        return self.score_total
