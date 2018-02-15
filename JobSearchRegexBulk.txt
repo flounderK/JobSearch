@@ -1,0 +1,4 @@
+[Pp]ython|(?<![A-Za-z])[Ss]cript(s|ing)*|[Pp]owershell|[Ll][Ii][Nn][Uu][Xx]|([Jj][Aa][Vv][Aa](?![Ss]))|(([Dd]ata|[Ii]nformation|[Cc]yber|[Nn]etwork)(.))*[Ss]ecurity|[Cc]yber|[Ss][Qq][Ll]|((?<![A-Za-z])[Aa][Rr][Cc][Hh](?![A-Za-z]))|[Ss]tructured.[Qq]uery.[Ll]anguage|[Dd]ev(elopment)*.{0,1}[Oo]p(s|erations)|[Bb][Aa][Ss][Hh]|[Ss]hell|[Ss]elenium|(?<!([A-Za-z]))[Oo]([Oo][Pp]|bject.[Oo]riented.([Pp]rogramming|[Dd]esign))|(?<![A-Za-z])[Gg]it([Hh]ub)*|(?<![A-Za-z])[Nn][Mm][Aa][Pp]|[Ww]eb.{0,1}[Ss]crap(e|ing)|[Nn]etwork(s|ing)*(.{0,1}([Tt]echnician|[Aa]dministrat(ion|or)|[Ee]ngineer))*|[Tt][Cc][Pp].[Ii][Pp]|[Dd][Nn][Ss]|([Ww]rit(e|ing) )*[Cc]ode(ing)*
+
+The expression(s) in this file are meant to be used for testing of multiple regular expressions 
+at once. 
