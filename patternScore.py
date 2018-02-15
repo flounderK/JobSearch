@@ -9,7 +9,7 @@ class Scored_Pattern():
         self.pattern = pattern
         self.re_obj = re.compile(pattern)
 
-class Score_Legend(list):
+class Score_Legend(set):
     """List of Scored_Pattern objects"""
     def find_patterns_by_score(self, score):
         return_list = list()
@@ -26,7 +26,7 @@ class Score_Legend(list):
 
     def add(self, Scored_Pattern):
         if not self.pattern_exists(Scored_Pattern.pattern):
-            self.append(Scored_Pattern)
+            self.add(Scored_Pattern)
 
 class document():
     def __init__(self, text, legend):
