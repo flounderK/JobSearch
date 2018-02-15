@@ -26,7 +26,7 @@ class Score_Legend(set):
 
     def add(self, Scored_Pattern):
         if not self.pattern_exists(Scored_Pattern.pattern):
-            self.add(Scored_Pattern)
+            super(Score_Legend, self).add(Scored_Pattern)
 
 class document():
     def __init__(self, text, legend):
