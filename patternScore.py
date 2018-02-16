@@ -42,7 +42,7 @@ class Document():
         for scored_pattern in self.legend:
             matches = re.findall(scored_pattern.re_obj, self.text)
             for match in matches:
-                total = total + scored_pattern.score
+                total = total + int(scored_pattern.score)
                 match_total = match_total + 1
         self.score_total = total /match_total
         return self.score_total
