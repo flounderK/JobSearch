@@ -1,5 +1,6 @@
 
 #TODO variable names, class names, and class attribute names are all pretty bad
+#Assert types
 import re
 
 class Scored_Pattern():
