@@ -43,7 +43,8 @@ class Document():
         self.author = author
         self.title = title
         self.legend = legend
-        self.score_total = self._score()
+        self.score_total = 0.0
+        self._score()
 
     def _score(self):
         """Scores the provided document based on the number of matches with the
@@ -57,5 +58,7 @@ class Document():
                 match_total = match_total + 1
         if not (total == 0 or match_total == 0):
             self.score_total = total /match_total
-        else:
-            self.score_total = 0.0
+
+    def rescore(self):
+        """A public call to _score"""
+        self._score()
