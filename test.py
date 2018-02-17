@@ -1,3 +1,4 @@
+import unittest
 from patternScore import Scored_Pattern, Score_Legend,Document
 
 search_regex = """[Pp]ython
@@ -72,5 +73,6 @@ Additional Qualifications
 Integrating a full range of consulting capabilities, Booz Allen is the one firm that helps clients solve their toughest problems by their side to help them achieve their missions.  Booz Allen is committed to delivering results that endure.
 
 We are proud of our diverse environment, EOE, M/F/Disability/Vet."""
+posting_text = posting_text + posting_text2
 job_posting=Document(legend=leg,text=posting_text)
-job_posting2=Document(legend=leg,text=posting_text2)
+#job_posting2=Document(legend=leg,text=posting_text2)
