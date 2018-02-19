@@ -52,6 +52,7 @@ soup = BeautifulSoup(content, "lxml")
 table = soup.find("table", id="search-results-table")
 rows = table.find_all("tr", role="row")
 
+eol_re = compile("\\n$")
 sub_re = compile("\\n|\\xa0")
 for i in range(1, (len(rows)-1)):
     href = rows[i].find("a")['href']
@@ -67,17 +68,20 @@ for i in range(1, (len(rows)-1)):
         tag = k.find("h2")
         if tag is not None:
             if sub(sub_re, "",tag.text) == 'Rank Position':
-                title = sub(sub_re,"",k.find("div", attrs={"class":"row"}).text)
+                title = sub(eol_re," ",k.find("div", attrs={"class":"row"}).text)
+                title = sub(sub_re, "", title)
         #Position Description
         tag = k.find("div", attrs={"class":"pal-label"})
         if tag is not None:
             if sub(sub_re, "",tag.text) == "Position Description":
-                text = sub(sub_re, "",k.find("div", attrs={"class":"pal-content"}).text)
+                text = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content"}).text)
+                text = sub(sub_re, "", text)
         #Organization Name
         tag = k.find("div", attrs={"class":"pal-label"})
         if tag is not None:
             if sub(sub_re, "",tag.text) == "Organization Name":
-                author = sub(sub_re, "",k.find("div", attrs={"class":"pal-content"}).text)
+                author = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content"}).text)
+                author = sub(sub_re, "", author)
     
     #grade text, author bias, ect.
     
