@@ -5,7 +5,7 @@ import re
 
 class Scored_Pattern():
     """A pattern with a score attatched to it"""
-    def __init__(self, score, pattern):
+    def __init__(self, pattern, score=3):
         self.score = score
         self.pattern = pattern
         self.re_obj = re.compile(pattern)
@@ -34,7 +34,17 @@ class Score_Legend(set):
         of the same pattern"""
         if not self.pattern_exists(Scored_Pattern.pattern):
             super(Score_Legend, self).add(Scored_Pattern)
-
+    
+    def create_from_file(self, filepath):
+        """Adds every expression in a file, one expression per line"""
+        nl_re = re.compile("\\n$")
+        with open(filepath) as f:
+            file_contents = f.readlines()
+        
+        for i in file_contents:
+            self.add(re.sub(nl_re,"", i))
+        
+    
 class Document():
     """This class just contains some text, a Score_Legend to score it by,
     and and optional title and author"""
