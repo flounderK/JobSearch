@@ -76,3 +76,4 @@ We are proud of our diverse environment, EOE, M/F/Disability/Vet."""
 posting_text = posting_text + posting_text2
 job_posting=Document(legend=leg,text=posting_text)
 #job_posting2=Document(legend=leg,text=posting_text2)
+print("Posting rating: {:f}".format(job_posting.score_total))
