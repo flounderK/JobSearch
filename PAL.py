@@ -19,6 +19,9 @@ from re import sub, compile
 def page_is_loaded(driver):
     return driver.find_element_by_tag_name("body") != None
 
+def page_reached(driver):
+    while (driver.current_url != "https://webapps2.uc.edu/elce/Student"):
+        time.sleep(20)
 
 username = ""
 password = ""
@@ -27,21 +30,20 @@ options = webdriver.ChromeOptions()
 options.add_argument("disable-infobars")
 driver = webdriver.Chrome(chrome_options=options)
 actions = ActionChains(driver)
-
+wait = ui.WebDriverWait(driver, 10)
 driver.get("https://webapps2.uc.edu/elce/Login")
 
-#wait
+#wait until body tag is found
+wait.until(page_is_loaded)
 
-#username_field = driver.find_element_by_id("username")
-#username_field.send_keys(username)
-#password_field = driver.find_element_by_id("password")
-#password_field.send_keys(password)
-#password_field.send_keys(Keys.RETURN)
-
+#wait until login is finished. I don't want to mess with credentials more than
+#neccessary.
+page_reached(driver)
 
 driver.find_element_by_css_selector(".col-md-2 > a:nth-child(7)").click()
 driver.find_element_by_css_selector("#viewRankMenuLink > a:nth-child(1)").click()
 
+wait.until(page_is_loaded)
 #actual page
 #select show all
 driver.find_element_by_css_selector("#search-results-table_length > label > select > option:nth-child(5)").click()
@@ -59,6 +61,8 @@ for i in range(1, (len(rows)-1)):
     url = urljoin(driver.current_url, href)
     driver.get(url)
     #wait
+    wait.until(page_is_loaded)
+
     soup = BeautifulSoup(driver.page_source, "lxml")
     panels = soup.find_all("div", class_="panel panel-default")
    
@@ -84,4 +88,5 @@ for i in range(1, (len(rows)-1)):
                 author = sub(sub_re, "", author)
     
     #grade text, author bias, ect.
-    
+driver.close()
+
