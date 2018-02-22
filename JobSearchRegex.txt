@@ -1,16 +1,16 @@
-[Pp]ython	4
+[Pp]ython	5
 (?<![A-Za-z])[Ss]cript(s|ing)*	3
-[Ll][Ii][Nn][Uu][Xx]	4
-([Jj][Aa][Vv][Aa](?![Ss]))	3
+[Ll][Ii][Nn][Uu][Xx]	5
+([Jj][Aa][Vv][Aa](?![Ss]))	3.5
 (([Dd]ata|[Ii]nformation|[Cc]yber|[Nn]etwork)(.))*[Ss]ecurity	5
 (([Ss][Qq][Ll])|([Ss]tructured.[Qq]uery.[Ll]anguage))	3
 [Dd]ev(elopment)*.{0,1}[Oo]p(s|erations)	3
 ([Bb][Aa][Ss][Hh]|(([Pp]ower)*[Ss]hell))	3.5
-[Ss]elenium	2
-(?<!([A-Za-z]))[Oo]([Oo][Pp]|bject.[Oo]riented.([Pp]rogramming|[Dd]esign))	1
-(?<![A-Za-z])[Gg]it	1
+[Ss]elenium	3
+(?<!([A-Za-z]))[Oo]([Oo][Pp]|bject.[Oo]riented.([Pp]rogramming|[Dd]esign))	3
+(?<![A-Za-z])[Gg]it	3
 (?<![A-Za-z])[Nn][Mm][Aa][Pp]	4
 [Ww]eb.{0,1}[Ss]crap(e|ing)	3
 [Nn]etwork(s|ing)*(.{0,1}([Aa]dministrat(ion|or)|[Ee]ngineer))	4
-[Tt][Cc][Pp].[Ii][Pp]|[Dd][Nn][Ss]	2
-([Ww]rit(e|ing) )*[Cc]ode(ing)*	1
+[Tt][Cc][Pp].[Ii][Pp]|[Dd][Nn][Ss]	3
+([Ww]rit(e|ing) )*[Cc]ode(ing)*	3
