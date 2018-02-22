@@ -103,6 +103,20 @@ for i in range(1, (len(rows)-1)):
                                 author=author)
     if doc.score_total >= 3.25:
         #apply
-        
+        soup.find("input", 
+                  attrs={"data-val":"true",
+                         "id":"PositionRankId_2",
+                         "name":"RankedPosition.PositionRankId",
+                         "type":"radio",
+                         "value":"2"}).click()
+
+        soup.find("button", 
+                  attrs={"type":"submit",
+                         "value":"save",
+                         "name":"command",
+                         "class":"btn btn-submit pal-margin-right-1",
+                         "id":"saveButton"}).click()
+        wait.until(page_is_loaded)
+
 driver.close()
 
