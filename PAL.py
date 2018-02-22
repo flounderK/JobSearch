@@ -55,6 +55,9 @@ table = soup.find("table", id="search-results-table")
 rows = table.find_all("tr", role="row")
 create_db()
 
+legend = patternScore.Score_Legend()
+legend.create_from_file("JobSearchRegex.txt")
+
 eol_re = compile("\\n$")
 sub_re = compile("\\n|\\xa0")
 for i in range(1, (len(rows)-1)):
@@ -94,6 +97,12 @@ for i in range(1, (len(rows)-1)):
     insert_into_db(text=text, title=title, author=author)
     #grade text, author bias, ect.
     #need to import created Scored_Legend
-
+    doc = patternScore.Document(legend=legend, 
+                                text=text, 
+                                title=title, 
+                                author=author)
+    if doc.score_total >= 3.25:
+        #apply
+        
 driver.close()
 

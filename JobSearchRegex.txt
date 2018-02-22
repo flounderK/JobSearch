@@ -1,17 +1,16 @@
-[Pp]ython
-(?<![A-Za-z])[Ss]cript(s|ing)*
-[Ll][Ii][Nn][Uu][Xx]
-([Jj][Aa][Vv][Aa](?![Ss]))
-(([Dd]ata|[Ii]nformation|[Cc]yber|[Nn]etwork)(.))*[Ss]ecurity
-(([Ss][Qq][Ll])|([Ss]tructured.[Qq]uery.[Ll]anguage))
-[Dd]ev(elopment)*.{0,1}[Oo]p(s|erations)
-([Bb][Aa][Ss][Hh]|(([Pp]ower)*[Ss]hell))
-[Ss]elenium
-(?<!([A-Za-z]))[Oo]([Oo][Pp]|bject.[Oo]riented.([Pp]rogramming|[Dd]esign))
-(?<![A-Za-z])[Gg]it
-(?<![A-Za-z])[Nn][Mm][Aa][Pp]
-[Ww]eb.{0,1}[Ss]crap(e|ing)
-[Nn]etwork(s|ing)*(.{0,1}([Aa]dministrat(ion|or)|[Ee]ngineer))
-[Tt][Cc][Pp].[Ii][Pp]|[Dd][Nn][Ss]
-([Ww]rit(e|ing) )*[Cc]ode(ing)*
-
+[Pp]ython	4
+(?<![A-Za-z])[Ss]cript(s|ing)*	3
+[Ll][Ii][Nn][Uu][Xx]	4
+([Jj][Aa][Vv][Aa](?![Ss]))	3
+(([Dd]ata|[Ii]nformation|[Cc]yber|[Nn]etwork)(.))*[Ss]ecurity	5
+(([Ss][Qq][Ll])|([Ss]tructured.[Qq]uery.[Ll]anguage))	3
+[Dd]ev(elopment)*.{0,1}[Oo]p(s|erations)	3
+([Bb][Aa][Ss][Hh]|(([Pp]ower)*[Ss]hell))	3.5
+[Ss]elenium	2
+(?<!([A-Za-z]))[Oo]([Oo][Pp]|bject.[Oo]riented.([Pp]rogramming|[Dd]esign))	1
+(?<![A-Za-z])[Gg]it	1
+(?<![A-Za-z])[Nn][Mm][Aa][Pp]	4
+[Ww]eb.{0,1}[Ss]crap(e|ing)	3
+[Nn]etwork(s|ing)*(.{0,1}([Aa]dministrat(ion|or)|[Ee]ngineer))	4
+[Tt][Cc][Pp].[Ii][Pp]|[Dd][Nn][Ss]	2
+([Ww]rit(e|ing) )*[Cc]ode(ing)*	1

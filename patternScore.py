@@ -12,6 +12,9 @@ class Scored_Pattern():
 
 class Score_Legend(set):
     """List of Scored_Pattern objects"""
+    def __init__(self):
+        super(Score_Legend, self).__init__()
+    
     def find_patterns_by_score(self, score):
         """Returns a list of all of the Scored_Pattern objects
         that have a score attribute that matches the provided number"""
@@ -42,7 +45,17 @@ class Score_Legend(set):
             file_contents = f.readlines()
         
         for i in file_contents:
-            self.add(re.sub(nl_re,"", i))
+            if (i == None):
+                continue
+            line = re.sub(nl_re, "", i)
+            split_line = re.split(r'\t', line)
+            pattern = split_line[0]
+            if len(split_line) > 1:
+                score = split_line[1]
+            else:
+                self.add(Scored_Pattern(pattern))
+                continue
+            self.add(Scored_Pattern(pattern, score))
         
     
 class Document():
