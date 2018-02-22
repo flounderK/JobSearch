@@ -15,6 +15,8 @@ from bs4 import BeautifulSoup
 import psutil
 from urllib.parse import urljoin
 from re import sub, compile
+from postingDatabase import create_db, insert_into_db
+import patternScore
 
 def page_is_loaded(driver):
     return driver.find_element_by_tag_name("body") != None
@@ -23,8 +25,6 @@ def page_reached(driver):
     while (driver.current_url != "https://webapps2.uc.edu/elce/Student"):
         time.sleep(20)
 
-username = ""
-password = ""
 #create driver object
 options = webdriver.ChromeOptions()
 options.add_argument("disable-infobars")
@@ -53,6 +53,7 @@ content = driver.page_source
 soup = BeautifulSoup(content, "lxml")
 table = soup.find("table", id="search-results-table")
 rows = table.find_all("tr", role="row")
+create_db()
 
 eol_re = compile("\\n$")
 sub_re = compile("\\n|\\xa0")
@@ -65,7 +66,10 @@ for i in range(1, (len(rows)-1)):
 
     soup = BeautifulSoup(driver.page_source, "lxml")
     panels = soup.find_all("div", class_="panel panel-default")
-   
+    
+    text = None
+    title = None
+    author = None
     for k in panels:
         #remove \n and \xa0 with sub
         #Position Name
@@ -87,6 +91,9 @@ for i in range(1, (len(rows)-1)):
                 author = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content"}).text)
                 author = sub(sub_re, "", author)
     
+    insert_into_db(text=text, title=title, author=author)
     #grade text, author bias, ect.
+    #need to import created Scored_Legend
+
 driver.close()
 
