@@ -2,13 +2,13 @@
 #TODO variable names, class names, and class attribute names are all pretty bad
 #Assert types
 import re
-
+from ast import literal_eval
 class Scored_Pattern():
     """A pattern with a score attatched to it"""
-    def __init__(self, pattern, score=3):
+    def __init__(self, pattern, score=3, flags=0):
         self.score = score
         self.pattern = pattern
-        self.re_obj = re.compile(pattern)
+        self.re_obj = re.compile(pattern, flags)
 
 class Score_Legend(set):
     """List of Scored_Pattern objects"""
@@ -40,23 +40,14 @@ class Score_Legend(set):
     
     def create_from_file(self, filepath):
         """Adds every expression in a file, one expression per line"""
-        nl_re = re.compile("\\n$")
+        
         with open(filepath) as f:
             file_contents = f.readlines()
-        
-        for i in file_contents:
-            if (i == None):
+        empty_re = re.compile(r'^\s*$')
+        for line in file_contents:
+            if re.match(empty_re, line):
                 continue
-            line = re.sub(nl_re, "", i)
-            split_line = re.split(r'\t', line)
-            pattern = split_line[0]
-            if len(split_line) > 1:
-                score = split_line[1]
-            else:
-                self.add(Scored_Pattern(pattern))
-                continue
-            self.add(Scored_Pattern(pattern, score))
-        
+            self.add(Scored_Pattern(**literal_eval(line)))
     
 class Document():
     """This class just contains some text, a Score_Legend to score it by,
