@@ -77,7 +77,7 @@ class Document():
         for scored_pattern in self.legend:
             matches = re.findall(scored_pattern.re_obj, self.text)
             for match in matches:
-                total = total + int(scored_pattern.score)
+                total = total + float(scored_pattern.score)
                 match_total = match_total + 1
         if not (total == 0 or match_total == 0):
             self.score_total = total /match_total
