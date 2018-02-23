@@ -1,5 +1,5 @@
 import unittest
-from patternScore import Scored_Pattern, Score_Legend,Document
+from context import patternScore
 
 search_regex = """[Pp]ython
 (?<![A-Za-z])[Ss]cript(s|ing)*
@@ -32,9 +32,10 @@ scores = """4
 2
 4
 3""".split()
-leg = Score_Legend()
+leg = patternScore.Score_Legend()
 for i in search_regex:
-    leg.add(Scored_Pattern(score=scores[search_regex.index(i)],pattern=i))
+    leg.add(patternScore.Scored_Pattern(
+                        score=scores[search_regex.index(i)],pattern=i))
 
 posting_text="""Participate as a member of the 24x7x365 Threat Intelligence Center (TIC) responsible for identifying malicious threat actors, thwarting hackers, preventing data breaches, acting as a security advocate for clients, performing security threat analysis, and working with clients to provide remediation strategies and guidance. Perform daily incident detection and response operations. Collect host–based artifacts and perform forensic analysis to determine if the asset has been compromised. Identify compromised computers using logs, live response, and related computer–centric evidence sources. Provide peer review of both signatures for development and resulting threat detections. Provide input on new detection strategies and remediation guidance to clients. Form accurate and precise real–time host–centric analysis, including live response and digital forensics, malware analysis, and log–centric (SIEM) analysis, as needed. Analyze and assess security incidents and escalate to client resources, appropriate teammates, or internal teams for additional assistance. Present analysis to other analysts for review, fine tuning, and feedback, work with the threat intelligence team to fine tune signatures, validate and characterize threats, collaborate with others when needed, and assist the incident response team with the incident response process."""
 posting_text2="""Basic Qualifications:
@@ -74,6 +75,6 @@ Integrating a full range of consulting capabilities, Booz Allen is the one firm 
 
 We are proud of our diverse environment, EOE, M/F/Disability/Vet."""
 posting_text = posting_text + posting_text2
-job_posting=Document(legend=leg,text=posting_text)
+job_posting=patternScore.Document(legend=leg,text=posting_text)
 #job_posting2=Document(legend=leg,text=posting_text2)
 print("Posting rating: {:f}".format(job_posting.score_total))
