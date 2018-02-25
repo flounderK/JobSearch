@@ -25,10 +25,20 @@ def create_db():
 def insert_into_db(text, title, author):
     conn = sqlite3.connect("JobPostings.db")
     c = conn.cursor()
-    tup = (text, title, author)
-    c.execute('''INSERT INTO 
-              postings(postingText, title, author) 
-              VALUES(?,?,?)''', tup)
+    if not record_exists:
+        tup = (text, title, author)
+        c.execute('''INSERT INTO 
+                  postings(postingText, title, author) 
+                  VALUES(?,?,?)''', tup)
     conn.commit()
     conn.close()
 
+def record_exists(text, conn=None):
+    if not conn:
+        conn = sqlite3.connect("JobPostings.db")
+    c = conn.cursor()
+    texts = c.execute('''SELECT postingText FROM postings''')
+    for i in texts:
+        if i == text:
+            return True
+    return False
