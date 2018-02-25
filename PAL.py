@@ -8,9 +8,7 @@ Created on Tue Feb 13 13:04:24 2018
 #ifs in that function. Hint: include panels assignment in function
 import time
 from selenium import webdriver
-from selenium.webdriver import ActionChains
 from selenium.webdriver.support import ui
-from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 import argparse
 from urllib.parse import urljoin
@@ -30,7 +28,6 @@ def main(args):
     options = webdriver.ChromeOptions()
     options.add_argument("disable-infobars")
     driver = webdriver.Chrome(chrome_options=options)
-    actions = ActionChains(driver)
     wait = ui.WebDriverWait(driver, 10)
     driver.get("https://webapps2.uc.edu/elce/Login")
 
@@ -60,7 +57,8 @@ def main(args):
 
     legend = patternScore.Score_Legend()
     legend.create_from_file("JobSearchRegex.txt")
-
+    
+    positions_applied_to = list()
     eol_re = compile("\\n$")
     sub_re = compile("\\n|\\xa0")
     for i in range(1, (len(rows)-1)):
@@ -76,6 +74,7 @@ def main(args):
         text = None
         title = None
         author = None
+        note = None
         for k in panels:
             #remove \n and \xa0 with sub
             #Position Name
@@ -91,12 +90,14 @@ def main(args):
                     text = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content"}).text)
                     text = sub(sub_re, "", text)
             #Organization Name
-            tag = k.find("div", attrs={"class":"pal-label"})
-            if tag is not None:
                 if sub(sub_re, "",tag.text) == "Organization Name":
                     author = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content"}).text)
                     author = sub(sub_re, "", author)
-
+            #Notes
+                if sub(sub_re, "", tag.text) == "Note From Instructor":
+                    note = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content well"}).text)
+                    note = sub(sub_re, "", note)
+                    
         if args.d:
             insert_into_db(text=text, title=title, author=author)
         #grade text, author bias, ect.
@@ -122,13 +123,21 @@ def main(args):
                                  "class":"btn btn-submit pal-margin-right-1",
                                  "id":"saveButton"}).click()
                 wait.until(page_is_loaded)
-
+                applied_dict = dict(zip(url, note))
+                positions_applied_to.append(applied_dict)
+                
         if (not args.a) and (not args.d):
             print("Document title: {:s}".format(str(doc.title)))
             print("Document author: {:s}".format(str(doc.author)))
             print("Document score: {:s}".format(str(doc.score_total)))
             
     driver.close()
+    if args.a and (len(positions_applied_to) > 0):
+        print("Applied to positions at the following links:")
+        for link, note in positions_applied_to:
+            print(link)
+            print(note)
+            print("")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d",
