@@ -64,7 +64,7 @@ def main(args):
     positions_applied_to = list()
     eol_re = compile("\\n$")
     sub_re = compile("\\n|\\xa0")
-    apply_re = compile("apply")
+    apply_re = compile("(to )*apply( [Oo]n)*")
 
     for i in range(1, (len(rows)-1)):
         href = rows[i].find("a")['href']
