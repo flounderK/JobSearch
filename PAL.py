@@ -15,7 +15,7 @@ from selenium.webdriver.support import ui
 from bs4 import BeautifulSoup
 import argparse
 from urllib.parse import urljoin
-from re import sub, compile
+from re import sub, compile, search
 from postingDatabase import create_db, insert_into_db
 import patternScore
 
@@ -64,6 +64,8 @@ def main(args):
     positions_applied_to = list()
     eol_re = compile("\\n$")
     sub_re = compile("\\n|\\xa0")
+    apply_re = compile("apply")
+
     for i in range(1, (len(rows)-1)):
         href = rows[i].find("a")['href']
         url = urljoin(driver.current_url, href)
@@ -78,6 +80,7 @@ def main(args):
         title = None
         author = None
         note = None
+        apply_flag = False
         for k in panels:
             #remove \n and \xa0 with sub
             #Position Name
@@ -92,6 +95,9 @@ def main(args):
                 if sub(sub_re, "",tag.text) == "Position Description":
                     text = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content"}).text)
                     text = sub(sub_re, "", text)
+                    if len(findall(apply_re, text)[0]) > 0:
+                        apply_flag = True
+
             #Organization Name
                 if sub(sub_re, "",tag.text) == "Organization Name":
                     author = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content"}).text)
@@ -100,15 +106,16 @@ def main(args):
                 if sub(sub_re, "", tag.text) == "Note From Instructor":
                     note = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content well"}).text)
                     note = sub(sub_re, "", note)
-                    
-        if args.d:
-            insert_into_db(text=text, title=title, author=author)
+        
         #grade text, author bias, ect.
-
         doc = patternScore.Document(legend=legend,
                                     text=text,
                                     title=title,
                                     author=author)
+
+        if args.d:
+            insert_into_db(text=text, title=title, author=author)
+
         if args.a:
             if doc.score_total >= 3.25:
                 #apply
