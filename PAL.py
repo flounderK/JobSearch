@@ -5,7 +5,10 @@ Created on Tue Feb 13 13:04:24 2018
 @author: Clif
 """
 #TODO: make the text finding/parsing stuff into a function, get rid of nested
-#ifs in that function. Hint: include panels assignment in function
+#ifs in that function. Hint: include panels assignment in function 
+#make the posting database with patternscore's grade included. 
+#Check if "Apply on our webpage" or any similar statements are present,
+#report this to the user
 import time
 from selenium import webdriver
 from selenium.webdriver.support import ui
