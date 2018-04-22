@@ -15,7 +15,7 @@ from selenium.webdriver.support import ui
 from bs4 import BeautifulSoup
 import argparse
 from urllib.parse import urljoin
-from re import sub, compile, search
+from re import sub, compile, findall
 from postingDatabase import create_db, insert_into_db
 import patternScore
 
