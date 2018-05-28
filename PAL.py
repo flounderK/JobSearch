@@ -18,6 +18,7 @@ from urllib.parse import urljoin
 from re import sub, compile, findall
 from postingDatabase import create_db, insert_into_db
 import patternScore
+from itertools import zip_longest
 
 def main(args):
     def page_is_loaded(driver):
@@ -64,8 +65,13 @@ def main(args):
     positions_applied_to = list()
     eol_re = compile("\\n$")
     sub_re = compile("\\n|\\xa0")
+<<<<<<< Updated upstream
     apply_re = compile("(to )*apply( [Oo]n)*")
 
+=======
+    links = list()
+    notes = list()
+>>>>>>> Stashed changes
     for i in range(1, (len(rows)-1)):
         href = rows[i].find("a")['href']
         url = urljoin(driver.current_url, href)
@@ -106,7 +112,20 @@ def main(args):
                 if sub(sub_re, "", tag.text) == "Note From Instructor":
                     note = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content well"}).text)
                     note = sub(sub_re, "", note)
+<<<<<<< Updated upstream
         
+=======
+        if note is None:
+            note = ""      
+        if title is None:
+            title = ""
+        if author is None:
+            author = ""
+        if text is None:
+            text = ""
+        if args.d:
+            insert_into_db(text=text, title=title, author=author)
+>>>>>>> Stashed changes
         #grade text, author bias, ect.
         doc = patternScore.Document(legend=legend,
                                     text=text,
@@ -119,35 +138,40 @@ def main(args):
         if args.a:
             if doc.score_total >= 3.25:
                 #apply
-                soup.find("input",
-                          attrs={"data-val":"true",
-                                 "id":"PositionRankId_2",
-                                 "name":"RankedPosition.PositionRankId",
-                                 "type":"radio",
-                                 "value":"2"}).click()
-
-                soup.find("button",
-                          attrs={"type":"submit",
-                                 "value":"save",
-                                 "name":"command",
-                                 "class":"btn btn-submit pal-margin-right-1",
-                                 "id":"saveButton"}).click()
+                #soup.find("input",
+                #          attrs={"data-val":"true",
+                #                 "id":"PositionRankId_2",
+                #                 "name":"RankedPosition.PositionRankId",
+                #                 "type":"radio",
+                #                 "value":"2"}).click()
+                driver.find_element_by_id("PositionRankId_2").click()            
+    
+                #soup.find("button",
+                #          attrs={"type":"submit",
+                #                 "value":"save",
+                #                 "name":"command",
+                #                 "class":"btn btn-submit pal-margin-right-1",
+                #                 "id":"saveButton"}).click()
+                driver.find_element_by_xpath('//*[@id="saveButton"]').click()
                 wait.until(page_is_loaded)
-                applied_dict = dict(zip(url, note))
-                positions_applied_to.append(applied_dict)
+                #applied_dict = dict(zip(url, note))
+                links.append(url)
+                notes.append(note)
+                #positions_applied_to.append(applied_dict)
                 
-        if (not args.a) and (not args.d):
-            print("Document title: {:s}".format(str(doc.title)))
-            print("Document author: {:s}".format(str(doc.author)))
-            print("Document score: {:s}".format(str(doc.score_total)))
+        
+        print("Document title: {:s}".format(str(doc.title)))
+        print("Document author: {:s}".format(str(doc.author)))
+        print("Document score: {:s}".format(str(doc.score_total)))
             
     driver.close()
-    if args.a and (len(positions_applied_to) > 0):
+    if args.a and (len(links) > 0):
         print("Applied to positions at the following links:")
-        for link, note in positions_applied_to:
+        for link, note in zip_longest(links, notes):
             print(link)
             print(note)
             print("")
+            
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d",
