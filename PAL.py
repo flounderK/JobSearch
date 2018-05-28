@@ -147,6 +147,9 @@ def main(args):
         for link, note in positions_applied_to:
             print(link)
             print(note)
+            if apply_flag:
+                print("You may need to apply seperately on this " +
+                      "company's website")
             print("")
 
 parser = argparse.ArgumentParser()
