@@ -62,16 +62,12 @@ def main(args):
     legend = patternScore.Score_Legend()
     legend.create_from_file("JobSearchRegex.txt")
     
-    positions_applied_to = list()
     eol_re = compile("\\n$")
     sub_re = compile("\\n|\\xa0")
-<<<<<<< Updated upstream
     apply_re = compile("(to )*apply( [Oo]n)*")
-
-=======
+    apply_flags = list()
     links = list()
     notes = list()
->>>>>>> Stashed changes
     for i in range(1, (len(rows)-1)):
         href = rows[i].find("a")['href']
         url = urljoin(driver.current_url, href)
@@ -112,9 +108,7 @@ def main(args):
                 if sub(sub_re, "", tag.text) == "Note From Instructor":
                     note = sub(eol_re, " ", k.find("div", attrs={"class":"pal-content well"}).text)
                     note = sub(sub_re, "", note)
-<<<<<<< Updated upstream
         
-=======
         if note is None:
             note = ""      
         if title is None:
@@ -125,7 +119,6 @@ def main(args):
             text = ""
         if args.d:
             insert_into_db(text=text, title=title, author=author)
->>>>>>> Stashed changes
         #grade text, author bias, ect.
         doc = patternScore.Document(legend=legend,
                                     text=text,
@@ -157,6 +150,7 @@ def main(args):
                 #applied_dict = dict(zip(url, note))
                 links.append(url)
                 notes.append(note)
+                apply_flags.append(apply_flag)
                 #positions_applied_to.append(applied_dict)
                 
         
@@ -167,10 +161,10 @@ def main(args):
     driver.close()
     if args.a and (len(links) > 0):
         print("Applied to positions at the following links:")
-        for link, note in zip_longest(links, notes):
+        for link, note, app_flag in zip_longest(links, notes, apply_flags):
             print(link)
             print(note)
-            if apply_flag:
+            if app_flag:
                 print("You may need to apply seperately on this " +
                       "company's website")
             print("")
